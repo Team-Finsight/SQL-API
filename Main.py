@@ -20,9 +20,8 @@ def get_openai_key(company, mac_id):
     try:
         # Connect to the MySQL database
         connection = mysql.connector.connect(host='localhost',
-                                             database='sales',
-                                             user='root',
-                                             password='Nith')
+                                             database='Customer',
+                                             user='root')
         if connection.is_connected():
             cursor = connection.cursor()
             # Decrypt company name and MAC ID before querying the database
@@ -31,7 +30,7 @@ def get_openai_key(company, mac_id):
             print("Original Company Name:", company)
             print("Original MAC ID:", mac_id)
             # Prepare the query and execute
-            query = "SELECT Openai_KEY FROM database_ref WHERE Company_Name = %s AND MAC_ID = %s"
+            query = "SELECT key FROM companies WHERE company_name = %s AND mac_id = %s"
             cursor.execute(query, (company, mac_id))
             # Fetch one record
             result = cursor.fetchone()
